@@ -1,37 +1,38 @@
-// App.tsx
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, Feather, Ionicons,FontAwesome5,MaterialIcons,FontAwesome6 } from '@expo/vector-icons';
 import { RecoilRoot } from 'recoil';
-
-
-import Login from './login';
-import Home from './home';
-import Signup from './signup';
+ 
+ 
+import Login from './LogReg/login';
+ 
+import Signup from './LogReg/signup';
 import Expert from "./expert";
 import { AuthProvider, useAuth } from './app/context/AuthContext';
 import { Button, View } from 'react-native';
-import Welcome from './welcome';
+import Welcome from './LogReg/welcome';
 import Try from './try'
-import Gender from './gender';
-import Goal from './goal'
-import BodyType from './bodytype';
-import Age from './age';
-import Weight from './weight'
-import Height from './height'
-import Activitylevel from './activitylevel'
+import Gender from './Questions/gender';
+import Goal from './Questions/goal'
+import BodyType from './Questions/bodytype';
+import Age from './Questions/age';
+import Weight from './Questions/weight'
+import Height from './Questions/height'
+import Activitylevel from './Questions/activitylevel'
 import Loading from  './loading'
-import HomePage from './HomePage'
-import Store from './store';
-import Workout from './workout';
-import Personaltrainer from './personaltrainer';
-import Meal from './meal';
-import Profile from './profile';
-import Steps  from './step';
+import HomePage from './Home/HomePage'
+import Store from './Home/store';
+import Workout from './Home/workout';
+import Personaltrainer from './Home/personaltrainer';
+import Meal from './Home/meal';
+import Profile from './Home/profile';
+import Steps  from './Home/step';
+import RecipeDetail from './Home/RecipeDetail';
+import mealplan  from './Home/mealplan';
 type RootStackParamList = {
-
+ 
     Login: undefined;
     Signup: undefined;
     Welcome:undefined;
@@ -48,8 +49,10 @@ type RootStackParamList = {
     Try:undefined;
     Steps:undefined;
     HomePage:undefined,
+    RecipeDetail:undefined;
+    mealplan:undefined;
 }
-
+ 
 type  RootTabParamList ={
     HomePage:undefined,
     Store:undefined,
@@ -58,8 +61,10 @@ type  RootTabParamList ={
     Meal:undefined;
     Profile:undefined;
     Steps:undefined;
+    RecipeDetail:undefined;
+    mealplan:undefined;
 }
-
+ 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab =createBottomTabNavigator<RootTabParamList>();
 export default function App() {
@@ -69,12 +74,12 @@ export default function App() {
         </AuthProvider>
     );
 }
-
+ 
 export const Layout = () => {
     const { authState, onLogout } = useAuth();
-
+ 
     return (
-
+ 
         <RecoilRoot>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="HomePage" >
@@ -82,6 +87,8 @@ export const Layout = () => {
                     {authState?.authenticated ? (
                         <>
                         <Stack.Screen name="Steps" component={Steps} />
+                        <Stack.Screen name="mealplan" component={mealplan} />
+                        <Stack.Screen name="RecipeDetail" component={RecipeDetail} />
                         <Stack.Screen name="HomePage" >
                             {() => (
                                 <Tab.Navigator  screenOptions={{ headerShown: true }} >
@@ -92,8 +99,8 @@ export const Layout = () => {
                                            title: 'Home',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <Entypo name="home" size={24} color={color} />,
                                            }}
                                             />
@@ -104,11 +111,11 @@ export const Layout = () => {
                                            title: 'Store',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <FontAwesome5 name="store" size={24} color={color} />,
                                            }}
-                                            /> 
+                                            />
                                     <Tab.Screen
                                            name="Workout"
                                            component={Workout}
@@ -116,11 +123,11 @@ export const Layout = () => {
                                            title: 'Workout',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <MaterialIcons name="fitness-center" size={24} color={color} />,
                                            }}
-                                            /> 
+                                            />
                                     <Tab.Screen
                                            name="Personaltrainer"
                                            component={Personaltrainer}
@@ -128,11 +135,11 @@ export const Layout = () => {
                                            title: 'Personaltrainer',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <FontAwesome6 name="person-running" size={24} color={color} />,
                                            }}
-                                            /> 
+                                            />
                                             <Tab.Screen
                                            name="Meal"
                                            component={Meal}
@@ -140,11 +147,11 @@ export const Layout = () => {
                                            title: 'Meal',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <Ionicons name="fast-food" size={24} color={color} />,
                                            }}
-                                            /> 
+                                            />
                                             <Tab.Screen
                                            name="Profile"
                                            component={Profile}
@@ -152,17 +159,17 @@ export const Layout = () => {
                                            title: 'Profile',
                                            tabBarShowLabel: true,
                                            headerShown: false,
-                                           tabBarInactiveTintColor:'#FF14AF',
-                                           tabBarActiveTintColor:"#39FF14",
+                                           tabBarInactiveTintColor:'#4B7B92',
+                                           tabBarActiveTintColor:"#F9B500",
                                            tabBarIcon: ({ color }) => <Ionicons name="person" size={24} color={color} />,
                                            }}
                                             />
                                 </Tab.Navigator>
                                  
                             )}
-                            
+                           
                         </Stack.Screen>
-                        
+                       
                         </>
                     ) : (
                         <>
@@ -177,7 +184,7 @@ export const Layout = () => {
                             <Stack.Screen name="Height" component={Height}/>
                             <Stack.Screen name="Activitylevel" component={Activitylevel}/>
                             <Stack.Screen name="Loading" component={Loading}/>
-                            
+                           
                         </>
                     )}
                 </Stack.Group>
