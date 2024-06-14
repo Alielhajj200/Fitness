@@ -89,7 +89,7 @@ const Signup: React.FC<RegisterProps> = ({ navigation }) => {
           <View style={styles.loginContainer}>
             <Text style={styles.loginText}>Already have an account?</Text>
             <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-              <Text style={[styles.loginText, { color: '#39FF14', marginLeft: 5 }]}>Login</Text>
+              <Text style={[styles.loginText, { color: '#F9B500', marginLeft: 5 }]}>Login</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 30,
-    color: '#39FF14',
+    color: '#F9B500',
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   signupButton: {
-    backgroundColor: '#39FF14',
+    backgroundColor: '#F9B500',
     borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 50,

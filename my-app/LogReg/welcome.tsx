@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   appName: {
-    color: 'white',
+    color: '#F9B500',
     fontSize: 50, // Increase the font size for a bold appearance
     fontWeight: 'bold',
     letterSpacing: 2, // Increase letter spacing
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     
   },
   subtitle: {
-    color: '#ff14af',
+    color: 'white',
     fontSize: 40, // Increase the font size for a bold appearance
     fontWeight: 'bold',
     letterSpacing: 2, // Increase letter spacing
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
   btnOutline: {
     backgroundColor: 'transparent',
     borderWidth: 2,
-    borderColor: '#39FF14', // Orange border color
+    borderColor: '#F9B500', // Orange border color
     borderRadius: 8,
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginVertical: 10,
   },
   btnText: {
-    color: '#39FF14', // Orange text color
+    color: '#F9B500', // Orange text color
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

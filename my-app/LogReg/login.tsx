@@ -77,7 +77,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       <View style={styles.signupContainer}>
         <Text style={styles.signupText}>Don't have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-          <Text style={[styles.signupText, { color: '#39FF14', marginLeft: 5 }]}>Signup</Text>
+          <Text style={[styles.signupText, { color: '#F9B500', marginLeft: 5 }]}>Signup</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -111,7 +111,7 @@ formContainer: {
 },
 subtitle: {
   fontSize: 30,
-  color: '#39FF14',
+  color: '#F9B500',
   fontWeight: 'bold',
   marginBottom: 10,
 },
@@ -139,7 +139,7 @@ forgotPassword: {
   marginBottom: 20,
 },
 loginButton: {
-  backgroundColor: '#39FF14',
+  backgroundColor: '#F9B500',
   borderRadius: 10,
   paddingVertical: 12,
   paddingHorizontal: 50,

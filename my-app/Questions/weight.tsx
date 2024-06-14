@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface WeightProps {
     navigation: any;
@@ -11,11 +12,12 @@ interface WeightProps {
 const Weight: React.FC<WeightProps> = ({ navigation }) => {
     const [weight, setWeight] = useState(0);
     const [isContinueEnabled, setIsContinueEnabled] = useState(false);
-    const [unit, setUnit] = useState('Kg');
+    const [unit, setUnit] = useState<'Kg' | 'Pound'>('Kg'); // State to track weight unit
     const [stringArray, setStringArray] = useRecoilState(stringArrayState);
     const [dashes, setDashes] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
+        // Update dashes based on stringArray length
         const greenDashes = stringArray.length;
         const remainingDashes = 7 - greenDashes;
 
@@ -23,7 +25,7 @@ const Weight: React.FC<WeightProps> = ({ navigation }) => {
 
         for (let i = 0; i < greenDashes; i++) {
             updatedDashes.push(
-                <Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />
+                <Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />
             );
         }
 
@@ -66,53 +68,57 @@ const Weight: React.FC<WeightProps> = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="chevron-back" size={24} color="black" />
-            </TouchableOpacity>
-            <View style={styles.dashesContainer}>{dashes}</View>
-            <Text style={styles.questionText}>What is your weight?</Text>
+        <QuesBackground>
+            <View style={styles.container}>
+                {/* Your existing UI elements */}
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Ionicons name="chevron-back" size={24} color="white" />
+                </TouchableOpacity>
+                <View style={styles.dashesContainer}>{dashes}</View>
+                <Text style={styles.questionText}>What is your weight?</Text>
 
-            <View style={styles.ageContainer}>
+                <View style={styles.ageContainer}>
+                    <TouchableOpacity
+                        style={styles.ageBox}
+                        onPress={() => setWeight(0)}
+                    >
+                        <Text style={styles.ageText}>{weight === 0 ? '0' : weight}</Text>
+                        <Text style={styles.yearsText}>{unit}</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.switchContainer}>
+                    <TouchableOpacity
+                        style={[styles.switchOption, unit === 'Kg' && styles.selectedSwitchOption]}
+                        onPress={() => setUnit('Kg')}
+                    >
+                        <Text>Kg</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.switchOption, unit === 'Pound' && styles.selectedSwitchOption]}
+                        onPress={() => setUnit('Pound')}
+                    >
+                        <Text>Pound</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <TextInput
+                    style={styles.input}
+                    placeholder={`Enter your weight (${unit})`}
+                    keyboardType="numeric"
+                    onChangeText={handleWeightChange}
+                    placeholderTextColor={'white'}
+                />
+
                 <TouchableOpacity
-                    style={styles.ageBox}
-                    onPress={() => setWeight(0)}
+                    style={[styles.continueButton, isContinueEnabled && styles.continueButtonEnabled]}
+                    disabled={!isContinueEnabled}
+                    onPress={handleContinue}
                 >
-                    <Text style={styles.ageText}>{weight === 0 ? '0' : weight}</Text>
-                    <Text style={styles.yearsText}>Kg</Text>
+                    <Text style={styles.continueButtonText}>Continue</Text>
                 </TouchableOpacity>
             </View>
-
-            <View style={styles.switchContainer}>
-                <TouchableOpacity
-                    style={[styles.switchOption, unit === 'Kg' && styles.selectedSwitchOption]}
-                    onPress={() => setUnit('Kg')}
-                >
-                    <Text>Kg</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.switchOption, unit === 'Pound' && styles.selectedSwitchOption]}
-                    onPress={() => setUnit('Pound')}
-                >
-                    <Text>Pound</Text>
-                </TouchableOpacity>
-            </View>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Enter your weight"
-                keyboardType="numeric"
-                onChangeText={handleWeightChange}
-            />
-
-            <TouchableOpacity
-                style={[styles.continueButton, isContinueEnabled && styles.continueButtonEnabled]}
-                disabled={!isContinueEnabled}
-                onPress={handleContinue}
-            >
-                <Text style={styles.continueButtonText}>Continue</Text>
-            </TouchableOpacity>
-        </View>
+        </QuesBackground>
     );
 };
 
@@ -121,6 +127,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 30
     },
     backButton: {
         position: 'absolute',
@@ -137,6 +144,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 20,
         fontWeight: 'bold',
+        color: 'white'
     },
     ageContainer: {
         alignItems: 'center',
@@ -152,11 +160,11 @@ const styles = StyleSheet.create({
     },
     ageText: {
         fontSize: 50,
-        color: 'grey',
+        color: 'black',
     },
     yearsText: {
         fontSize: 18,
-        color: 'grey',
+        color: 'black',
     },
     switchContainer: {
         flexDirection: 'row',
@@ -168,21 +176,26 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         marginRight: 10,
+        borderColor: 'white',
+        color: 'white'
     },
     selectedSwitchOption: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#F9B500',
+        color: 'white'
     },
     input: {
         width: '80%',
         height: 40,
-        borderColor: 'gray',
+        borderColor: 'white',
         borderWidth: 1,
         borderRadius: 5,
         marginBottom: 20,
         paddingHorizontal: 10,
+        color: 'white'
     },
     continueButton: {
-        backgroundColor: '#ccc',
+        borderWidth: 2,
+        borderColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -191,11 +204,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     continueButtonEnabled: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#072E33',
     },
     continueButtonText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
     },
 });

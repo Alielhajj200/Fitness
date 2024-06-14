@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from Expo
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface ActivitylevelProps {
   navigation: any;
@@ -41,7 +42,7 @@ const Gender: React.FC<ActivitylevelProps> = ({ navigation }) => {
     const dashes = [];
 
     for (let i = 0; i < greenDashes; i++) {
-      dashes.push(<Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />);
+      dashes.push(<Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />);
     }
 
     for (let j = 0; j < remainingDashes; j++) {
@@ -52,9 +53,11 @@ const Gender: React.FC<ActivitylevelProps> = ({ navigation }) => {
   };
 
   return (
+    <QuesBackground>
     <View style={styles.container}>
+      
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Ionicons name="chevron-back" size={24} color="black" />
+        <Ionicons name="chevron-back" size={24} color="white" />
       </TouchableOpacity>
 
       <View style={styles.dashesContainer}>{renderDashes()}</View>
@@ -86,7 +89,9 @@ const Gender: React.FC<ActivitylevelProps> = ({ navigation }) => {
       >
         <Text style={styles.continueButtonText}>Continue</Text>
       </TouchableOpacity>
+      
     </View>
+    </QuesBackground>
   );
 };
 
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
+    marginTop:30
   },
   backButton: {
     position: 'absolute',
@@ -116,12 +121,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
+    color:'white'
   },
   genderBox: {
-    width: '80%',
-    height: 100,
+    width: '90%',
+    height: 130,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(0,0,0,0.5)',
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
@@ -129,12 +135,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderWidth: 2,
     borderColor: '#ccc',
+    
   },
   selectedGender: {
-    borderColor: '#39FF14',
+    borderColor: '#F9B500',
   },
   genderText: {
     fontSize: 18,
+    color:'white'
   },
   genderImage: {
     width: 90,
@@ -145,7 +153,8 @@ const styles = StyleSheet.create({
     height: 30,
   },
   continueButton: {
-    backgroundColor: '#ccc',
+    borderWidth: 2,
+    borderColor: 'white',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
@@ -154,11 +163,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   continueButtonEnabled: {
-    backgroundColor: '#39FF14',
+    backgroundColor: '#072E33',
   },
   continueButtonText: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
   },
 });

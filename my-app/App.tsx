@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, Feather, Ionicons,FontAwesome5,MaterialIcons,FontAwesome6 } from '@expo/vector-icons';
 import { RecoilRoot } from 'recoil';
  
- 
+
 import Login from './LogReg/login';
  
 import Signup from './LogReg/signup';
@@ -31,6 +31,13 @@ import Profile from './Home/profile';
 import Steps  from './Home/step';
 import RecipeDetail from './Home/RecipeDetail';
 import mealplan  from './Home/mealplan';
+import { FitnessContextProvider } from "./Context";
+import QuesBackground from './Questions/QuesBackground'
+import WorkOutScreen from './Home/WorkoutScreens/WorkoutScreen';
+import FitScreen from './Home/WorkoutScreens/FitScreen';
+import RestScreen from './Home/WorkoutScreens/RestScreen';
+import Equipment from './Home/WorkoutScreens/Equipment';
+import workoutExercises from './Home/WorkoutScreens/workoutExercises';
 type RootStackParamList = {
  
     Login: undefined;
@@ -51,6 +58,11 @@ type RootStackParamList = {
     HomePage:undefined,
     RecipeDetail:undefined;
     mealplan:undefined;
+    WorkoutScreen:undefined;
+    FitScreen:undefined;
+    RestScreen:undefined;
+    Equipment:undefined;
+    workoutExercises:undefined;
 }
  
 type  RootTabParamList ={
@@ -63,6 +75,11 @@ type  RootTabParamList ={
     Steps:undefined;
     RecipeDetail:undefined;
     mealplan:undefined;
+    WorkScreen:undefined;
+    FitScreen:undefined;
+    RestScreen:undefined;
+    Equipment:undefined;
+    workoutExercises:undefined;
 }
  
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -79,7 +96,7 @@ export const Layout = () => {
     const { authState, onLogout } = useAuth();
  
     return (
- 
+ <FitnessContextProvider>
         <RecoilRoot>
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="HomePage" >
@@ -89,6 +106,11 @@ export const Layout = () => {
                         <Stack.Screen name="Steps" component={Steps} />
                         <Stack.Screen name="mealplan" component={mealplan} />
                         <Stack.Screen name="RecipeDetail" component={RecipeDetail} />
+                        <Stack.Screen name="WorkoutScreen" component={WorkOutScreen} options={{headerShown:false}}/>
+                        <Stack.Screen name="FitScreen" component={FitScreen} options={{headerShown:false}}/>
+                        <Stack.Screen name="RestScreen" component={RestScreen} options={{headerShown:false}}/>
+                        <Stack.Screen name="Equipment" component={Equipment} options={{headerShown:false}}/>
+                        <Stack.Screen name="workoutExercises" component={workoutExercises} options={{headerShown:false}}/>
                         <Stack.Screen name="HomePage" >
                             {() => (
                                 <Tab.Navigator  screenOptions={{ headerShown: true }} >
@@ -191,5 +213,6 @@ export const Layout = () => {
             </Stack.Navigator>
         </NavigationContainer>
     </RecoilRoot>
+    </FitnessContextProvider>
     );
 };

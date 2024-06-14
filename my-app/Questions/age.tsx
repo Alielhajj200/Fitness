@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Modal, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface AgeProps {
     navigation: any;
 }
 
 const Age: React.FC<AgeProps> = ({ navigation }) => {
-    const [age, setAge] = useState(0);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedAge, setSelectedAge] = useState(0);
     const [isContinueEnabled, setIsContinueEnabled] = useState(false);
     const [stringArray, setStringArray] = useRecoilState(stringArrayState);
     const [dashes, setDashes] = useState<JSX.Element[]>([]);
@@ -22,7 +24,7 @@ const Age: React.FC<AgeProps> = ({ navigation }) => {
 
         for (let i = 0; i < greenDashes; i++) {
             updatedDashes.push(
-                <Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />
+                <Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />
             );
         }
 
@@ -35,14 +37,14 @@ const Age: React.FC<AgeProps> = ({ navigation }) => {
         setDashes(updatedDashes);
     }, [stringArray]);
 
-    const handleAgeChange = (value: string) => {
-        const newAge = parseInt(value);
-        setAge(newAge);
-        setIsContinueEnabled(newAge >= 10 && newAge <= 100);
+    const handleAgeSelect = (age: number) => {
+        setSelectedAge(age);
+        setIsContinueEnabled(age >= 10 && age <= 100);
+        toggleModal();
     };
 
     const handleAge = () => {
-        addString(age);
+        addString(selectedAge);
         console.log(stringArray[0] + stringArray[1] + stringArray[2]);
         navigation.navigate("Weight")
     }
@@ -51,39 +53,56 @@ const Age: React.FC<AgeProps> = ({ navigation }) => {
         setStringArray((prevArray: any) => [...prevArray, newString]);
     };
 
+    const toggleModal = () => {
+        setIsModalVisible(!isModalVisible);
+    };
+
     return (
-        <View style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="chevron-back" size={24} color="black" />
-            </TouchableOpacity>
-            <View style={styles.dashesContainer}>{dashes}</View>
-            <Text style={styles.questionText}>How old are you?</Text>
-
-            <View style={styles.ageContainer}>
-                <TouchableOpacity
-                    style={styles.ageBox}
-                    onPress={() => setAge(0)}
-                >
-                    <Text style={styles.ageText}>{age === 0 ? '0' : age}</Text>
-                    <Text style={styles.yearsText}>years</Text>
+        <QuesBackground>
+            <View style={styles.container}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                    <Ionicons name="chevron-back" size={24} color="white" />
                 </TouchableOpacity>
+                <View style={styles.dashesContainer}>{dashes}</View>
+                <Text style={styles.questionText}>How old are you?</Text>
+
+                <TouchableOpacity onPress={toggleModal} style={styles.ageBox}>
+                    <Text style={styles.ageText}>{selectedAge === 0 ? 'Select Age' : selectedAge}</Text>
+                    <Ionicons name="chevron-down" size={24} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.continueButton, isContinueEnabled && styles.continueButtonEnabled]}
+                    disabled={!isContinueEnabled}
+                    onPress={handleAge}
+                >
+                    <Text style={styles.continueButtonText}>Continue</Text>
+                </TouchableOpacity>
+
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={isModalVisible}
+                    onRequestClose={toggleModal}
+                >
+                    <View style={styles.modalContainer}>
+                        <View style={styles.modalContent}>
+                            <ScrollView>
+                                {[...Array(91)].map((_, i) => (
+                                    <TouchableOpacity
+                                        key={i}
+                                        style={styles.modalItem}
+                                        onPress={() => handleAgeSelect(i + 10)}
+                                    >
+                                        <Text style={styles.modalItemText}>{i + 10}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </ScrollView>
+                        </View>
+                    </View>
+                </Modal>
             </View>
-
-            <TextInput
-                style={styles.input}
-                placeholder="Enter your age"
-                keyboardType="numeric"
-                onChangeText={handleAgeChange}
-            />
-
-            <TouchableOpacity
-                style={[styles.continueButton, isContinueEnabled && styles.continueButtonEnabled]}
-                disabled={!isContinueEnabled}
-                onPress={handleAge}
-            >
-                <Text style={styles.continueButtonText}>Continue</Text>
-            </TouchableOpacity>
-        </View>
+        </QuesBackground>
     );
 };
 
@@ -92,6 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 30,
     },
     backButton: {
         position: 'absolute',
@@ -108,38 +128,27 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 20,
         fontWeight: 'bold',
-    },
-    ageContainer: {
-        alignItems: 'center',
+        color: 'white',
     },
     ageBox: {
         width: 150,
-        height: 150,
-        borderRadius: 75,
+        height: 50,
+        borderRadius: 25,
         backgroundColor: '#ccc',
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 20,
+        flexDirection: 'row',
+        paddingHorizontal: 20,
     },
     ageText: {
-        fontSize: 50,
-        color: 'grey',
-    },
-    yearsText: {
         fontSize: 18,
-        color: 'grey',
-    },
-    input: {
-        width: '80%',
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: 20,
-        paddingHorizontal: 10,
+        color: 'black',
+        marginRight: 10,
     },
     continueButton: {
-        backgroundColor: '#ccc',
+        borderWidth: 2,
+        borderColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -148,13 +157,39 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     continueButtonEnabled: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#072E33',
     },
     continueButtonText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        paddingHorizontal: 20,
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 15,
+        width: '95%',
+        maxWidth: 500, // Adjusted maximum width
+        maxHeight:600
+    },
+    modalItem: {
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ccc',
+    },
+    modalItemText: {
+        fontSize: 16, // Adjusted font size
+        color: 'black',
+    },
+    
+    
 });
 
 export default Age;

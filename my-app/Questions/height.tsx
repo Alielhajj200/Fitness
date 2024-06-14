@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 interface HeightProps {
     navigation: any;
@@ -54,7 +56,7 @@ const Height: React.FC<HeightProps> = ({ navigation }) => {
         const dashes = [];
 
         for (let i = 0; i < greenDashes; i++) {
-            dashes.push(<Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />);
+            dashes.push(<Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />);
         }
 
         for (let j = 0; j < remainingDashes; j++) {
@@ -65,9 +67,10 @@ const Height: React.FC<HeightProps> = ({ navigation }) => {
     };
 
     return (
+        <QuesBackground>
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="chevron-back" size={24} color="black" />
+                <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
             <View style={styles.dashesContainer}>{renderDashes()}</View>
             <Text style={styles.questionText}>How tall are you?</Text>
@@ -101,6 +104,7 @@ const Height: React.FC<HeightProps> = ({ navigation }) => {
                 style={styles.input}
                 placeholder="Enter your height"
                 keyboardType="numeric"
+                placeholderTextColor={'white'}
                 onChangeText={handleHeightChange}
             />
 
@@ -112,6 +116,7 @@ const Height: React.FC<HeightProps> = ({ navigation }) => {
                 <Text style={styles.continueButtonText}>Continue</Text>
             </TouchableOpacity>
         </View>
+        </QuesBackground>
     );
 };
 
@@ -120,6 +125,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop:30
     },
     backButton: {
         position: 'absolute',
@@ -136,6 +142,7 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 20,
         fontWeight: 'bold',
+        color:'white'
     },
     ageContainer: {
         alignItems: 'center',
@@ -151,11 +158,11 @@ const styles = StyleSheet.create({
     },
     ageText: {
         fontSize: 50,
-        color: 'grey',
+        color: 'black',
     },
     yearsText: {
         fontSize: 18,
-        color: 'grey',
+        color: 'black',
     },
     switchContainer: {
         flexDirection: 'row',
@@ -167,9 +174,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 1,
         marginRight: 10,
+        color:'white',
+        borderColor:'white'
     },
     selectedSwitchOption: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#F9B500',
     },
     input: {
         width: '80%',
@@ -179,9 +188,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 20,
         paddingHorizontal: 10,
+        color:'white'
     },
     continueButton: {
-        backgroundColor: '#ccc',
+        borderWidth: 2,
+        borderColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -190,11 +201,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     continueButtonEnabled: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#072E33',
     },
     continueButtonText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
     },
 });

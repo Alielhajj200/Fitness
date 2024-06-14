@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, StyleSheet, ActivityIndicator,Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import Ionicons from Expo
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface GenderProps {
   navigation: any;
-  
 }
 
 const Gender: React.FC<GenderProps> = ({ navigation }) => {
@@ -31,7 +31,7 @@ const Gender: React.FC<GenderProps> = ({ navigation }) => {
 
     for (let i = 0; i < greenDashes; i++) {
       updatedDashes.push(
-        <Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />
+        <Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />
       );
     }
 
@@ -61,56 +61,63 @@ const Gender: React.FC<GenderProps> = ({ navigation }) => {
     
     navigation.navigate("Goal");
   };
-  
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Ionicons name="chevron-back" size={24} color="black" />
-      </TouchableOpacity>
-      <View style={styles.dashesContainer}>{dashes}</View>
-      <Text style={styles.welcomeText}>Welcome to WorkFit</Text>
-      <Text style={styles.questionText}>What is your gender?</Text>
-
-      <TouchableOpacity
-        style={[styles.genderBox, selectedGender === 'female' && styles.selectedGender]}
-        onPress={() => selectGender('female')}
-      >
-        <Text style={styles.genderText}>Female</Text>
-        <Image source={require('../assets/girl.png')} style={styles.genderImage} />
-        {selectedGender === 'female' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={[styles.genderBox, selectedGender === 'male' && styles.selectedGender]}
-        onPress={() => selectGender('male')}
-      >
-        <Text style={styles.genderText}>Male</Text>
-        <Image source={require('../assets/male.png')} style={styles.genderImage} />
-        {selectedGender === 'male' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
-      </TouchableOpacity>
-
-      {loading ? (
-        <ActivityIndicator size="small" color="#39FF14" style={{ marginTop: 20 }} />
-      ) : (
-        <TouchableOpacity
-          style={[styles.continueButton, selectedGender && styles.continueButtonEnabled]}
-          disabled={!selectedGender}
-          onPress={handlegender}
-        >
-          <Text style={styles.continueButtonText}>Continue</Text>
+   <QuesBackground>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="chevron-back" size={24} color="white" />
         </TouchableOpacity>
-      )}
-    </View>
+        <View style={styles.dashesContainer}>{dashes}</View>
+        <Text style={styles.welcomeText}>Welcome to WorkFit</Text>
+        <Text style={styles.questionText}>What is your gender?</Text>
+
+        <TouchableOpacity
+          style={[styles.genderBox, selectedGender === 'female' && styles.selectedGender]}
+          onPress={() => selectGender('female')}
+        >
+          <Text style={styles.genderText}>Female</Text>
+          <Image source={require('../assets/girl.png')} style={styles.genderImage} />
+          {selectedGender === 'female' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.genderBox, selectedGender === 'male' && styles.selectedGender]}
+          onPress={() => selectGender('male')}
+        >
+          <Text style={styles.genderText}>Male</Text>
+          <Image source={require('../assets/male.png')} style={styles.genderImage} />
+          {selectedGender === 'male' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
+        </TouchableOpacity>
+
+        {loading ? (
+          <ActivityIndicator size="small" color="#072E33" style={{ marginTop: 20 }} />
+        ) : (
+          <TouchableOpacity
+            style={[styles.continueButton, selectedGender && styles.continueButtonEnabled]}
+            disabled={!selectedGender}
+            onPress={handlegender}
+          >
+            <Text style={styles.continueButtonText}>Continue</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </QuesBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    marginTop: 30
   },
   backButton: {
     position: 'absolute',
@@ -126,30 +133,33 @@ const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 24,
     marginBottom: 10,
+    color: 'white',
   },
   questionText: {
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: 'white',
   },
   genderBox: {
-    width: '80%',
+    width: '90%',
     height: 100,
     borderRadius: 10,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
     marginBottom: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     borderWidth: 2,
-    borderColor: '#ccc',
+    borderColor: 'white',
   },
   selectedGender: {
-    borderColor: '#39FF14',
+    borderColor: '#F9B500',
   },
   genderText: {
     fontSize: 18,
+    color: 'white',
   },
   genderImage: {
     width: 90,
@@ -160,7 +170,8 @@ const styles = StyleSheet.create({
     height: 30,
   },
   continueButton: {
-    backgroundColor: '#ccc',
+    borderWidth: 2,
+    borderColor: 'white',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 30,
@@ -169,11 +180,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   continueButtonEnabled: {
-    backgroundColor: '#39FF14',
+    backgroundColor: '#072E33',
   },
   continueButtonText: {
     fontSize: 18,
-    color: 'black',
+    color: 'white',
     fontWeight: 'bold',
   },
 });

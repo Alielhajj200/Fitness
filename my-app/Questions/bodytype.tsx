@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface BodyTypeProps {
     navigation: any;
@@ -22,7 +23,7 @@ const BodyType: React.FC<BodyTypeProps> = ({ navigation }) => {
 
         for (let i = 0; i < greenDashes; i++) {
             updatedDashes.push(
-                <Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />
+                <Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />
             );
         }
 
@@ -54,9 +55,10 @@ const BodyType: React.FC<BodyTypeProps> = ({ navigation }) => {
     }
 
     return (
+        <QuesBackground>
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="chevron-back" size={24} color="black" />
+                <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
             <View style={styles.dashesContainer}>{dashes}</View>
             <Text style={styles.questionText}>What's your body type?</Text>
@@ -105,6 +107,7 @@ const BodyType: React.FC<BodyTypeProps> = ({ navigation }) => {
                 <Text style={styles.continueButtonText}>Continue</Text>
             </TouchableOpacity>
         </View>
+        </QuesBackground>
     );
 };
 
@@ -113,6 +116,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop:30
     },
     backButton: {
         position: 'absolute',
@@ -129,24 +133,27 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 20,
         fontWeight: 'bold',
+        color:'white'
     },
     typeBox: {
-        width: '80%',
+        width: '90%',
         height: 120,
         borderRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(0,0,0,0.5)',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         borderWidth: 2,
         borderColor: '#ccc',
+        marginBottom:10
     },
     selectedType: {
-        borderColor: '#39FF14',
+        borderColor: '#F9B500',
     },
     typeText: {
         fontSize: 18,
+        color:'white'
     },
     tickImage: {
         width: 30,
@@ -157,7 +164,8 @@ const styles = StyleSheet.create({
         height: 115,
     },
     continueButton: {
-        backgroundColor: '#ccc',
+        borderWidth: 2,
+        borderColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -166,12 +174,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     continueButtonEnabled: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#072E33',
     },
     continueButtonText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
+        
     },
 });
 

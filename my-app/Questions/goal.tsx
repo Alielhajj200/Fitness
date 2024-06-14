@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRecoilState } from 'recoil';
 import { stringArrayState } from '../recoilStore';
+import QuesBackground from '../Questions/QuesBackground'
 
 interface GoalProps {
     navigation: any;
@@ -30,7 +31,7 @@ const Goal: React.FC<GoalProps> = ({ navigation }) => {
 
         for (let i = 0; i < greenDashes; i++) {
             updatedDashes.push(
-                <Ionicons key={i} name="radio-button-on" size={24} color="#39FF14" />
+                <Ionicons key={i} name="radio-button-on" size={24} color="#F9B500" />
             );
         }
 
@@ -54,38 +55,39 @@ const Goal: React.FC<GoalProps> = ({ navigation }) => {
     }
 
     return (
+        <QuesBackground>
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-                <Ionicons name="chevron-back" size={24} color="black" />
+                <Ionicons name="chevron-back" size={24} color="white" />
             </TouchableOpacity>
             <View style={styles.dashesContainer}>{dashes}</View>
             <Text style={styles.questionText}>What is your fitness goal?</Text>
 
             <TouchableOpacity
-                style={[styles.goalBox, selectedGoal === 'muscles' && styles.selectedGoal]}
+                style={[styles.goalBox, selectedGoal === 'Build muscles' && styles.selectedGoal]}
                 onPress={() => selectGoal('Build muscles')}
             >
                 <Text style={styles.goalText}>Gain muscles</Text>
                 <Image source={require('../assets/male.png')} style={styles.goalImage} />
-                {selectedGoal === 'muscles' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
+                {selectedGoal === 'Build muscles' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={[styles.goalBox, selectedGoal === 'weightLoss' && styles.selectedGoal]}
-                onPress={() => selectGoal('Lossweight')}
+                style={[styles.goalBox, selectedGoal === 'Lose weight' && styles.selectedGoal]}
+                onPress={() => selectGoal('Lose weight')}
             >
                 <Text style={styles.goalText}>Lose weight</Text>
                 <Image source={require('../assets/loseweight.png')} style={styles.goalImage} />
-                {selectedGoal === 'weightLoss' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
+                {selectedGoal === 'Lose weight' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={[styles.goalBox, selectedGoal === 'weightGain' && styles.selectedGoal]}
-                onPress={() => selectGoal('Gainweight')}
+                style={[styles.goalBox, selectedGoal === 'Gain weight' && styles.selectedGoal]}
+                onPress={() => selectGoal('Gain weight')}
             >
                 <Text style={styles.goalText}>Gain weight</Text>
                 <Image source={require('../assets/gainweight.png')} style={styles.goalImage} />
-                {selectedGoal === 'weightGain' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
+                {selectedGoal === 'Gain weight' && <Image source={require('../assets/tick.png')} style={styles.tickImage} />}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -96,6 +98,7 @@ const Goal: React.FC<GoalProps> = ({ navigation }) => {
                 <Text style={styles.continueButtonText}>Continue</Text>
             </TouchableOpacity>
         </View>
+        </QuesBackground>
     );
 };
 
@@ -104,11 +107,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 30,
     },
     backButton: {
         position: 'absolute',
         top: 20,
         left: 20,
+        color: 'white',
     },
     dashesContainer: {
         position: 'absolute',
@@ -120,24 +125,27 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 20,
         fontWeight: 'bold',
+        color: 'white',
     },
     goalBox: {
-        width: '80%',
+        width: '90%',
         height: 130,
         borderRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(0,0,0,0.5)',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         borderWidth: 2,
         borderColor: '#ccc',
+        marginBottom: 10,
     },
     selectedGoal: {
-        borderColor: '#39FF14',
+        borderColor: '#F9B500',
     },
     goalText: {
         fontSize: 18,
+        color: 'white',
     },
     tickImage: {
         width: 30,
@@ -148,7 +156,8 @@ const styles = StyleSheet.create({
         height: 125,
     },
     continueButton: {
-        backgroundColor: '#ccc',
+        borderWidth: 2,
+        borderColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -157,11 +166,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     continueButtonEnabled: {
-        backgroundColor: '#39FF14',
+        backgroundColor: '#072E33',
     },
     continueButtonText: {
         fontSize: 18,
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
     },
 });
