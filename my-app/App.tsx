@@ -38,6 +38,9 @@ import FitScreen from './Home/WorkoutScreens/FitScreen';
 import RestScreen from './Home/WorkoutScreens/RestScreen';
 import Equipment from './Home/WorkoutScreens/Equipment';
 import workoutExercises from './Home/WorkoutScreens/workoutExercises';
+import ProductDetails from './Home/E-commerceScreens/ProductDetails';
+import ShoppingCart from './Home/E-commerceScreens/ShoppingCart';
+import Checkout from './Home/E-commerceScreens/Checkout';
 type RootStackParamList = {
  
     Login: undefined;
@@ -63,6 +66,9 @@ type RootStackParamList = {
     RestScreen:undefined;
     Equipment:undefined;
     workoutExercises:undefined;
+    ProductDetails:undefined;
+    ShoppingCart:undefined;
+    Checkout:undefined;
 }
  
 type  RootTabParamList ={
@@ -80,6 +86,9 @@ type  RootTabParamList ={
     RestScreen:undefined;
     Equipment:undefined;
     workoutExercises:undefined;
+    ProductDetails:undefined;
+    ShoppingCart:undefined;
+    Checkout:undefined;
 }
  
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -111,6 +120,9 @@ export const Layout = () => {
                         <Stack.Screen name="RestScreen" component={RestScreen} options={{headerShown:false}}/>
                         <Stack.Screen name="Equipment" component={Equipment} options={{headerShown:false}}/>
                         <Stack.Screen name="workoutExercises" component={workoutExercises} options={{headerShown:false}}/>
+                        <Stack.Screen name="ProductDetails" component={ProductDetails} options={{headerShown:false}}/>
+                        <Stack.Screen name="ShoppingCart" component={ShoppingCart} options={{headerShown:false}}/>
+                        <Stack.Screen name="Checkout" component={Checkout} options={{headerShown:false}}/>
                         <Stack.Screen name="HomePage" >
                             {() => (
                                 <Tab.Navigator  screenOptions={{ headerShown: true }} >

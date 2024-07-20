@@ -58,7 +58,7 @@ const WorkoutExercises = () => {
               source={{ uri: item.gifUrl }}
             />
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 17, fontWeight: "bold", width: 170, color: "#072E33" }}>
+              <Text style={{ fontSize: 18, fontWeight: "900", width: 170, color: "#072E33" }}>
                 {item.name}
               </Text>
               <Text style={{ marginTop: 4, fontSize: 18, color: "#F9B500" }}>
@@ -85,7 +85,7 @@ const WorkoutExercises = () => {
         }}
         style={styles.startButton}
       >
-        <Text style={styles.startButtonText}>START</Text>
+        <Text style={styles.startButtonText}>Start Workout</Text>
       </Pressable>
     </>
   );
@@ -109,13 +109,14 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     marginVertical: 20,
-    width: "80%",
-    borderRadius: 50, // Make it rounded
+    width: "85%",
+    height:50,
+    borderRadius: 13, // Make it rounded
   },
   startButtonText: {
     textAlign: "center",
     color: "#FFFFFF",
-    fontSize: 15,
+    fontSize: 22,
     fontWeight: "600",
   },
   imageOverlayText: {
@@ -129,9 +130,10 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   smallText: {
-    fontSize: 14,
-    textAlign: "center",
+    fontSize: 16,
+    textAlign: 'center',
     marginBottom: 10,
+    fontWeight:'600'
   },
   label: {
     fontSize: 18,
